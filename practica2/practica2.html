@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Practica 2 - Ejercicios</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f4f7;
+            text-align: center;
+            padding: 50px;
+        }
+        button {
+            display: block;
+            width: 300px;
+            margin: 10px auto;
+            padding: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            border: none;
+            background-color: #007bff;
+            color: white;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        #resultado {
+            margin-top: 30px;
+            font-size: 18px;
+            white-space: pre-wrap;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Practica 2 - Ejercicios</h1>
+
+    <button onclick="ejercicioClima()">Ejercicio 1: Clima</button>
+    <button onclick="ejercicioFizzBuzz()">Ejercicio 2: FizzBuzz</button>
+    <button onclick="ejercicioFecha()">Ejercicio 3: Fecha Actual</button>
+    <button onclick="ejercicioLugarTuristico()">Ejercicio 4: lugarTuristico</button>
+    <button onclick="ejercicioHotel()">Ejercicio 5: Hotel</button>
+
+    <div id="resultado"></div>
+
+    <script>
+        // ==========================
+        // Ejercicio 1: Clima
+        // ==========================
+        function ejercicioClima() {
+            let temp = parseInt(prompt("Ingrese la temperatura en °C:"));
+            let resultado = '';
+            if (temp >= -10 && temp <= 15) {
+                resultado = "Frío";
+            } else if (temp >= 16 && temp <= 25) {
+                resultado = "Templado";
+            } else if (temp >= 26 && temp <= 40) {
+                resultado = "Calor";
+            } else {
+                resultado = "Temperatura fuera de rango";
+            }
+            document.getElementById('resultado').textContent = `Clima: ${resultado}`;
+        }
+
+        // ==========================
+        // Ejercicio 2: FizzBuzz
+        // ==========================
+        function ejercicioFizzBuzz() {
+            let resultado = '';
+            for (let i = 1; i <= 100; i++) {
+                if (i % 3 === 0 && i % 5 === 0) {
+                    resultado += 'FizzBuzz\n';
+                } else if (i % 3 === 0) {
+                    resultado += 'Fizz\n';
+                } else if (i % 5 === 0) {
+                    resultado += 'Buzz\n';
+                }
+            }
+            document.getElementById('resultado').textContent = resultado;
+        }
+
+        // ==========================
+        // Ejercicio 3: Fecha Actual
+        // ==========================
+        function ejercicioFecha() {
+            const fecha = new Date();
+            const dias = ["Domingo","Lunes","Martes","Miércoles","Jueves","Viernes","Sábado"];
+            const meses = ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
+            let diaSemana = dias[fecha.getDay()];
+            let dia = fecha.getDate();
+            let mes = meses[fecha.getMonth()];
+            let año = fecha.getFullYear();
+            let fechaCompleta = `${diaSemana}, ${dia} de ${mes} del ${año}`;
+            document.getElementById('resultado').textContent = `Fecha actual: ${fechaCompleta}`;
+        }
+
+        // ==========================
+        // Ejercicio 4: lugarTuristico
+        // ==========================
+        const lugarTuristico = {
+            nombre: "Parque Nacional Amboró",
+            ciudad: "Santa Cruz",
+            precioEntrada: 50,
+            horario: "08:00 - 18:00",
+            calificaciones: [5, 4, 4, 5, 3],
+            promedioCalificaciones: function() {
+                let suma = 0;
+                for (let i = 0; i < this.calificaciones.length; i++) {
+                    suma += this.calificaciones[i];
+                }
+                return suma / this.calificaciones.length;
+            },
+            aplicarDescuento: function(porcentaje) {
+                let descuento = this.precioEntrada * (porcentaje/100);
+                this.precioEntrada -= descuento;
+            }
+        };
+
+        function ejercicioLugarTuristico() {
+            let promedio = lugarTuristico.promedioCalificaciones();
+            lugarTuristico.aplicarDescuento(20);
+            let resultado = `Lugar: ${lugarTuristico.nombre}\nCiudad: ${lugarTuristico.ciudad}\nPrecio con 20% de descuento: ${lugarTuristico.precioEntrada}\nPromedio de calificaciones: ${promedio.toFixed(2)}`;
+            document.getElementById('resultado').textContent = resultado;
+        }
+
+        // ==========================
+        // Ejercicio 5: Hotel
+        // ==========================
+        class Hotel {
+            constructor(nombre, ciudad, habitacionesDisponibles) {
+                this.nombre = nombre;
+                this.ciudad = ciudad;
+                this.habitacionesDisponibles = habitacionesDisponibles;
+            }
+            reservar(cantidad) {
+                if(cantidad <= this.habitacionesDisponibles){
+                    this.habitacionesDisponibles -= cantidad;
+                    return `Reserva exitosa. Habitaciones restantes: ${this.habitacionesDisponibles}`;
+                } else {
+                    return "No hay suficientes habitaciones disponibles.";
+                }
+            }
+            liberar(cantidad) {
+                this.habitacionesDisponibles += cantidad;
+                return `Habitaciones liberadas. Total disponibles: ${this.habitacionesDisponibles}`;
+            }
+            info() {
+                return `Hotel: ${this.nombre}, Ciudad: ${this.ciudad}, Habitaciones disponibles: ${this.habitacionesDisponibles}`;
+            }
+        }
+
+        const hotel1 = new Hotel("Hotel Paraíso", "Santa Cruz", 10);
+
+        function ejercicioHotel() {
+            let infoInicial = hotel1.info();
+            let reservar = hotel1.reservar(4);
+            let liberar = hotel1.liberar(2);
+            let infoFinal = hotel1.info();
+            let resultado = `${infoInicial}\n${reservar}\n${liberar}\n${infoFinal}`;
+            document.getElementById('resultado').textContent = resultado;
+        }
+
+    </script>
+</body>
+</html>
