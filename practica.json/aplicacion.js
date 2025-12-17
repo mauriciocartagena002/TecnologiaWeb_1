@@ -2,7 +2,7 @@
 
 async function populate() {
 
-      const requestURL = 'aplicacion.json';
+      const requestURL = 'https://raw.githubusercontent.com/mauriciocartagena002/TecnologiaWeb_1/main/practica.json/aplicacion.json';
       const request = new Request(requestURL);
 
       const response = await fetch(request);
